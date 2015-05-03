@@ -1,0 +1,5 @@
+{
+  "main": {
+    "/index.html": "io.github.locatlang.Main"
+  }
+}

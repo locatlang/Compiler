@@ -1,4 +1,4 @@
-package net.cercus.locattest;
+package io.github.locatlang.locattest;
 
 import locat.util.Random;
 import locat.util.Math;
