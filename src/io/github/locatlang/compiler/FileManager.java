@@ -1,6 +1,6 @@
 package io.github.locatlang.compiler;
 
-import java.io.File;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,15 +35,42 @@ public class FileManager {
 		}
 	}
 
-	public void initSearch() {
+	public List<File> initSearch() {
 		searchRunning = true;
 		searchInDir(path);
-		System.out.println("Found following files: ");
-		for( File i : lcfiles ) {
-			System.out.println(i.getName() + " (" + i.getAbsolutePath() + ")");
-		}
+		return lcfiles;
 	}
 	public void cancelSearch() {
 		searchRunning = false;
+	}
+
+	public String[] readFile(File file) throws IOException {
+		BufferedReader reader = new BufferedReader(new FileReader(file));
+		String line = null;
+		List<String> lines = new ArrayList<String>();
+		while ((line = reader.readLine()) != null) {
+			lines.add(line);
+		}
+		return lines.toArray(new String[lines.size()]);
+	}
+	public String[] readFile(String fpath) throws IOException {
+		return readFile(new File(fpath));
+	}
+
+	public void writeFile(String path, String[] data, String encoding) throws IOException {
+		PrintWriter writer = new PrintWriter(path, encoding);
+		for( String line : data ) {
+			writer.println(line);
+		}
+		writer.close();
+	}
+	public void writeFile(String path, String[] data) throws IOException {
+		writeFile(path, data, "UTF-8");
+	}
+	public void writeFile(File file, String[] data, String encoding) throws IOException {
+		writeFile(file.getAbsolutePath(), data, encoding);
+	}
+	public void writeFile(File file, String[] data) throws IOException {
+		writeFile(file, data, "UTF-8");
 	}
 }
