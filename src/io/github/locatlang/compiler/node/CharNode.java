@@ -6,7 +6,7 @@ package io.github.locatlang.compiler.node;
 public class CharNode extends Node {
     private char value;
 
-    private CharNode(char value) {
+    public CharNode(char value) {
         this.value = value;
     }
 
