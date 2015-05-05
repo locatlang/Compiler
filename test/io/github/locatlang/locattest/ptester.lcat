@@ -1,0 +1,8 @@
+package io.github.locatlang.locattest.ptester;
+
+public main class ptester {
+	string thing = `This string
+	has multiple lines
+	and it has a semicolon;
+	and some brackets: {}`;
+}

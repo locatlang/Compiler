@@ -84,15 +84,37 @@ public class Parser {
 			"0",
 			"u"
 	};
-	public void splitCombined(String clines) {
+	public List<Node> splitCombined(String clines) {
 		char[] chars = clines.toCharArray();
 		boolean openQuotes = false, openML = false, openChar = false;
 		String lastString = "";
+		String lastObject = "";
 		String lastChar = "";
 		List<Node> nodes = new ArrayList<Node>();
 		for( char _c : chars ) {
 			String c = "" + _c;
 			if( openQuotes || openML || openChar ) {
+				lastObject += c;
+				if( openQuotes && c.equals("\"") ) {
+					openQuotes = false;
+//					nodes.add(new StringNode(lastString));
+//					lastString = "";
+//					lastObject += c;
+					continue;
+				} else if( openML && c.equals("`") ) {
+					openML = false;
+					//TODO: use special class instead of StringNode
+//					nodes.add(new StringNode(lastString));
+//					lastString = "";
+//					lastObject += c;
+					continue;
+				} else if( openChar && c.equals("'") ) {
+					openChar = false;
+//					nodes.add(new CharNode(lastString.charAt(0)));
+//					lastString = "";
+//					lastObject += c;
+					continue;
+				}
 				lastString += c;
 				//TODO: Add checking if characters aren't invalid
 				if( openChar && lastString.length() > 1 ) {
@@ -107,34 +129,47 @@ public class Parser {
 				//TODO: add support for \u0000 etc
 				continue;
 			}
-			if( c.equals("\"") ) {
+			if( c.equals(" ") ) {
+				if( lastChar.equals(" ") ) {
+					continue;
+				}
+			}
+			if( c.equals("\t") ) {
+				continue;
+			}
+
+			if( c.equals(";") || c.equals("{") || c.equals("}") ) {
+				lastObject += c;
+				nodes.add(new StringNode(lastObject));
+				lastObject = "";
+			} else if( c.equals("\"") ) {
 				//don't need to check if openML etc are false since the above skips this code
 				if( !openQuotes ) {
+					lastObject += c;
 					openQuotes = true;
-				} else if( !openML && !openChar ) {
-					openQuotes = false;
-					nodes.add(new StringNode(lastString));
-					lastString = "";
+//					nodes.add(new StringNode(lastObject));
+//					lastObject = "";
 				}
 			} else if( c.equals("`") ) {
 				if( !openML ) {
+					lastObject += c;
 					openML = true;
-				} else if( !openQuotes && !openChar ) {
-					openML = false;
-					//TODO: use special class instead of StringNode
-					nodes.add(new StringNode(lastString));
-					lastString = "";
+//					nodes.add(new StringNode(lastObject));
+//					lastObject = "";
 				}
 			} else if( c.equals("'") ) {
 				if( !openChar ) {
+					lastObject += c;
 					openChar = true;
-				} else if( !openQuotes && !openML ) {
-					openChar = false;
-					nodes.add(new CharNode(lastString.charAt(0)));
-					lastString = "";
+//					nodes.add(new StringNode(lastObject));
+//					lastObject = "";
 				}
+			} else {
+				lastObject += c;
 			}
 			lastChar = c;
 		}
+		nodes.add(new StringNode(lastObject));
+		return nodes;
 	}
 }
