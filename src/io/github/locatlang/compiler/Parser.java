@@ -1,5 +1,7 @@
 package io.github.locatlang.compiler;
 
+import io.github.locatlang.compiler.exception.IllegalCharLengthException;
+import io.github.locatlang.compiler.exception.UnescapedBackslashException;
 import io.github.locatlang.compiler.node.CharNode;
 import io.github.locatlang.compiler.node.Node;
 import io.github.locatlang.compiler.node.StringNode;
@@ -109,6 +111,11 @@ public class Parser {
 //					lastObject += c;
 					continue;
 				} else if( openChar && c.equals("'") ) {
+					if( lastString.length() != 1 &&
+							!lastString.substring(0,1).equals("\\") &&
+							Arrays.asList(escapes).contains(lastString.substring(1,2)) ) {
+						throw new IllegalCharLengthException();
+					}
 					openChar = false;
 //					nodes.add(new CharNode(lastString.charAt(0)));
 //					lastString = "";
@@ -117,14 +124,11 @@ public class Parser {
 				}
 				lastString += c;
 				//TODO: Add checking if characters aren't invalid
-				if( openChar && lastString.length() > 1 ) {
-					//TODO: Throw error
-				}
 				if( openQuotes && c.equals("\n") ) {
 					//TODO: Throw error
 				}
 				if( lastChar == "\\" && !Arrays.asList(escapes).contains(c) ) {
-					//TODO: Throw error
+					throw new UnescapedBackslashException();
 				}
 				//TODO: add support for \u0000 etc
 				continue;
