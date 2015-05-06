@@ -8,12 +8,16 @@ public class ClassNode extends Node {
     private ClassScope scope;
     private String name;
     private Node[] contents;
+    private String extend;
+    private String[] implement;
 
-    public ClassNode(ClassProtection protection, ClassScope scope, String name, Node[] contents) {
+    public ClassNode(ClassProtection protection, ClassScope scope, String name, Node[] contents, String extend, String[] implement) {
         this.protection = protection;
         this.scope      = scope;
         this.name       = name;
         this.contents   = contents;
+        this.extend     = extend;
+        this.implement  = implement;
     }
 
     public ClassProtection getProtection() {
@@ -47,4 +51,22 @@ public class ClassNode extends Node {
     public void setContents(Node[] contents) {
         this.contents = contents;
     }
+
+    public String getExtend() {
+        return extend;
+    }
+
+    public void setExtend(String extend) {
+        this.extend = extend;
+    }
+
+    public String[] getImplement() {
+        return implement;
+    }
+
+    public void setImplement(String[] implement) {
+        this.implement = implement;
+    }
+
+
 }

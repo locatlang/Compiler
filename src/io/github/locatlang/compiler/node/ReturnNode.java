@@ -10,11 +10,11 @@ public class ReturnNode extends Node {
         this.returnValue = returnValue;
     }
 
-    public Node getNamespace() {
+    public Node getReturnValue() {
         return returnValue;
     }
 
-    public void setNamespace(String[] namespace) {
+    public void setReturnValue(Node returnValue) {
         this.returnValue = returnValue;
     }
 }

@@ -6,6 +6,7 @@ import io.github.locatlang.compiler.node.StringNode;
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Scanner;
 
@@ -57,10 +58,22 @@ public class Main {
 		    String cl = ps.combineLines(lines);
 		    List<Node> nodes = ps.splitCombined(cl);
 		    System.out.println("");
-		    System.out.println("-- Done --");
+		    System.out.println("-- Parsing complete --");
 		    for( Node i : nodes ) {
 			    System.out.println("~ " + ((StringNode) i).getValue().replaceAll("\n","\u21aa"));
 		    }
+			System.out.println("-- Init semantics --");
+			String[] instructions = new String[nodes.size()];
+			for(int i = 0; i < nodes.size(); i++) {
+				if(nodes.get(i) instanceof StringNode) {
+					instructions[i] = ((StringNode) nodes.get(i)).getValue();
+				}
+			}
+			HashMap<File, String[]> hashmap =  new HashMap<File, String[]>();
+			hashmap.put(thing, instructions);
+			SemanticsParser semanticsParser = new SemanticsParser(hashmap);
+			HashMap<File, List<Node>> semantics = semanticsParser.initParse();
+			System.out.println("-- Done --");
 	    } else if( args.length > 1 ) {
 			//arguments are (supposed to be) pairs of <key> <value>
 		    if( args.length % 2 != 0 ) {
