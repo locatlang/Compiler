@@ -89,12 +89,60 @@ public class Main {
 			    System.out.println("-- Done --");*/
 		    }
 	    } else if( args.length > 1 ) {
-			//arguments are (supposed to be) pairs of --<key> <value>
-		    if( args.length % 2 != 0 ) {
-			    System.out.println("Arguments must be --<key> <value> pairs");
+			//arguments are (supposed to be) pairs of --<key> <value (can include spaces)>
+		    HashMap<String,String> arguments = new HashMap<>();
+		    String lastKey = "";
+		    String lastValue = null;
+		    for( String i : args ) {
+				if( i.startsWith("--") ) {
+					if( lastValue == null && !lastKey.equals("") ) {
+						System.out.println("Argument " + lastKey + " has no value?");
+						System.exit(0);
+					}
+					if( !lastKey.equals("") ) {
+						arguments.put(lastKey, lastValue);
+					}
+					lastKey = i;
+					lastValue = null;
+					continue;
+				}
+			    if( lastValue != null ) {
+				    lastValue += " ";
+				    lastValue += i;
+			    } else {
+				    lastValue = i;
+			    }
+		    }
+		    if( !lastKey.equals("") && lastValue != null ) {
+			    arguments.put(lastKey, lastValue);
+		    }
+		    for( String k : arguments.keySet() ) {
+				String v = arguments.get(k);
+			    if( v.startsWith("\"") && v.endsWith("\"") ) {
+				    arguments.put(k, v.substring(1, v.length() - 1));
+			    }
+		    }
+		    //actual command
+		    String inputPath = null;
+		    String outputPath = null;
+
+		    for( String _k : arguments.keySet() ) {
+				String v = arguments.get(_k);
+			    String k = _k.substring(2);
+			    if( k.equals("in") ) {
+					inputPath = v;
+			    } else if( k.equals("out") ) {
+				    outputPath = v;
+			    }
+		    }
+		    if( inputPath == null ) {
+				System.out.println("No input path specified (--in <path>)");
+			    System.exit(0);
+		    } else if( outputPath == null ) {
+			    System.out.println("No output path specified (--out <path>)");
 			    System.exit(0);
 		    }
-		    //TODO: Do something
+		    System.out.println("This way of doing things has not been implemented yet.. wait for it!");
 	    } else {
 		    System.out.println("No arguments specified.\nUse --help for help");
 		    System.exit(0);
