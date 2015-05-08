@@ -11,6 +11,10 @@ public class CommentContainer extends Container {
 	public String getComment() {
 		return comment;
 	}
+	@Override
+	public String toString() {
+		return comment;
+	}
 	public void setComment(String comment) {
 		this.comment = comment;
 	}

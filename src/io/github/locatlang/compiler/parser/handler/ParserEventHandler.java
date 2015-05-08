@@ -5,7 +5,7 @@ import io.github.locatlang.compiler.parser.ParseCharEvent;
 /**
  * Created by creeps on 08/05/15.
  */
-public class CharHandler {
+public class ParserEventHandler {
 	//when this method returns true, the
 	//current character will be put into
 	//a new Container

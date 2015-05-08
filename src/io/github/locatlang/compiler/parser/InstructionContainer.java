@@ -11,6 +11,9 @@ public class InstructionContainer extends Container {
 	public String getContent() {
 		return content;
 	}
+	public String toString() {
+		return content;
+	}
 	public void setContent(String content) {
 		this.content = content;
 	}

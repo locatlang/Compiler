@@ -22,4 +22,14 @@ public class StatementContainer extends Container {
 	public void setContent(Container[] content) {
 		this.content = content;
 	}
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		sb.append(details);
+		sb.append(" {");
+		for( Container i : content ) {
+			sb.append(i.toString());
+		}
+		sb.append("}");
+		return sb.toString();
+	}
 }

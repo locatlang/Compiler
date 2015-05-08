@@ -1,10 +1,14 @@
 package io.github.locatlang.locattest.ptester;
 
-public main class ptester {
+public ptester class ptester {
 	string thing = `This string
 	has multiple lines
 	and it has a semicolon;
 	and some brackets: {}`;
+	string thing2 = "This thing has one line";
+	char thing3 = 't'; //this is a char!
+	string thing4 = /(thisIsSomeRegex)/;
 }
-//hello;
-:D
+//hello :D
+/* this is
+   a block comment */
