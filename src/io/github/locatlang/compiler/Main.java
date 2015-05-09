@@ -1,7 +1,8 @@
 package io.github.locatlang.compiler;
 
+import io.github.locatlang.compiler.node.Node;
+import io.github.locatlang.compiler.node.StringNode;
 import io.github.locatlang.compiler.parser.Container;
-import io.github.locatlang.compiler.parser.StatementContainer;
 
 import java.io.File;
 import java.io.IOException;
@@ -69,22 +70,9 @@ public class Main {
 			    Container[] nodes = ps.parse(lines);
 			    System.out.println("");
 			    System.out.println("-- Parsing complete --");
-			    String prefix = "\n~ ";
 			    for (Container i : nodes) {
-				    String il = i.toString(prefix);
-				    il = il.replaceAll("^(" + prefix + ")[\\s\\n\\r]+",prefix);
-				    il = il.replaceAll("[\\s\\n\\r]+$","");
-				    for( char j : il.toCharArray() ) {
-					    String c = "" + j;
-				        System.out.print(c);
-					    /*try {
-						    Thread.sleep(1);
-					    } catch (InterruptedException e) {
-						    e.printStackTrace();
-					    }*/
-				    }
+				    System.out.println("~ " + i.toString().replaceAll("\n", "\\\\n"));
 			    }
-			    System.out.println();
 			    System.exit(0);
 			    /*
 			    System.out.println("-- Init semantics --");

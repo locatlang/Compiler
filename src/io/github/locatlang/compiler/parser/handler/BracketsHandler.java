@@ -32,6 +32,7 @@ public class BracketsHandler extends ParserEventHandler {
 			event.setContent(event.getAfterIndex(endOffset));
 			event.setContainer(cn);
 			event.setSplit(true);
+			System.out.println(event.getContent());
 			return endOffset;
 		} else if( event.getCharacter().equals("}") ) {
 			event.setCloseStatement(true);

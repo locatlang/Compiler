@@ -36,12 +36,6 @@ public class Parser {
 		boolean running = true;
 		while( running ) {
 			String c = "" + spinput[index];
-			System.out.print(c);
-			/*try {
-				Thread.sleep(1);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}*/
 			ParseCharEvent event = new ParseCharEvent(c, input, index, lastObject);
 			int hdcskip = hDocComment.handle(event);
 			if( hdcskip > 0 ) {
