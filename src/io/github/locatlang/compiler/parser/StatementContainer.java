@@ -22,14 +22,23 @@ public class StatementContainer extends Container {
 	public void setContent(Container[] content) {
 		this.content = content;
 	}
-	public String toString() {
+	public String toString(String prefix) {
 		StringBuilder sb = new StringBuilder();
+		sb.append(prefix);
 		sb.append(details);
-		sb.append(" {");
+		sb.append(prefix);
+		sb.append("{");
 		for( Container i : content ) {
-			sb.append(i.toString());
+			String il = i.toString(prefix);
+			il = il.replaceAll("^(" + prefix + ")[\\s\\n\\r]+","");
+			il = il.replaceAll("[\\s\\n\\r]+$","");
+			sb.append(prefix + il);
 		}
+		sb.append(prefix);
 		sb.append("}");
 		return sb.toString();
+	}
+	public String toString() {
+		return toString("");
 	}
 }

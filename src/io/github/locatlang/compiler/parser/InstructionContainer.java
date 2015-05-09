@@ -11,8 +11,11 @@ public class InstructionContainer extends Container {
 	public String getContent() {
 		return content;
 	}
+	public String toString(String prefix) {
+		return prefix + content;
+	}
 	public String toString() {
-		return content;
+		return toString("");
 	}
 	public void setContent(String content) {
 		this.content = content;
